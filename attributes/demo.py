@@ -120,10 +120,15 @@ def main(args, demo_output_folder, smpl_model_path, render=True):
                 print(f'{name:20s}: {l1m:.2f} +/- {l1std:.2f},  {acc:.2f}\%')
 
         # print attribute predition for each shape
+        results = {}
         for img_idx, img_id in enumerate(dataset.db['filename']):
             print(f'\n Results for image {img_id}')
             for name, estimate in zip(output_names, test_prediction[img_idx]):
                 print(f'{name:20s}: {estimate:.2f}')
+                if img_id == 'temp':
+                  results[name] = str(estimate)
+        with open('results.json', 'w') as f:
+            json.dump(results, f)
 
 
 if __name__ == "__main__":

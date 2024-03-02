@@ -81,11 +81,16 @@ def main(
 
         # print result
         mmts_str = '    Virtual measurements: '
+        results = {}
         for k, v in measurements.items():
             value = v['tensor'].item()
             unit = 'kg' if k == 'mass' else 'm'
             mmts_str += f'    {k}: {value:.2f} {unit}'
+            if npz_file[0] == 't':
+              results[k] = value
         print(mmts_str)
+        with open('results.json', 'w') as f:
+            json.dump(data, f)
 
         # add measurements to image and save image
         if render:
